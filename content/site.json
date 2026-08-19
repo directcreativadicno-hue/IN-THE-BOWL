@@ -1,15 +1,15 @@
 {
-  "hero_title_line1": "Made daily.",
-  "hero_title_line2": "Delivered to you.",
-  "hero_subtitle": "Bowls hechos frescos cada día, con todo lo que necesitas para hacer del lunch tu mejor momento.",
+  "instagram_link": "https://www.instagram.com/inthebowll/",
   "hero_tagline": "Lunch but better.",
-  "whatsapp_number": "573000000000",
-  "instagram_link": "https://instagram.com",
-  "crew_channel_link": "https://whatsapp.com/channel/TU-CANAL-AQUI",
-  "footer_hours": "Lunes a sábado\n11:00 a.m. – 3:00 p.m.",
   "crew_benefit_1": "Planea tu mes completo de almuerzos a un precio muy especial. Sin pensar qué vas a comer cada día.",
+  "footer_hours": "Lunes a sábado\n11:00 a.m. – 3:00 p.m.",
   "crew_benefit_2": "Te enteras primero de los bowls de la semana, drops y promos especiales antes que nadie.",
   "crew_benefit_3": "Acceso directo para pedidos especiales y atención personalizada por WhatsApp.",
+  "hero_title_line1": "Made daily.",
+  "hero_title_line2": "Delivered to you.",
+  "crew_channel_link": "https://whatsapp.com/channel/TU-CANAL-AQUI",
+  "whatsapp_number": "573000000000",
+  "hero_subtitle": "Bowls hechos frescos cada día, con todo lo que necesitas para hacer del lunch tu mejor momento.",
   "menu": [
     {
       "id": "bowl-de-hoy-1",
