@@ -347,7 +347,7 @@
           <a href="#" id="crew-channel-link" target="_blank" rel="noopener" class="btn btn-primary" style="text-decoration:none; display:inline-flex;">Sé parte aquí →</a>
         </div>
         <div>
-          <h3 style="font-size:16px; margin-bottom:12px; text-transform:uppercase; letter-spacing:1px; font-family:var(--font-mono); color:var(--lime);">@inthebowl</h3>
+          <h3 id="ig-handle-heading" style="font-size:16px; margin-bottom:12px; text-transform:uppercase; letter-spacing:1px; font-family:var(--font-mono); color:var(--lime);">@inthebowl</h3>
           <div class="ig-grid">
             <div class="ig-cell">Bowl del día</div>
             <div class="ig-cell">Detrás de cámaras</div>
@@ -408,6 +408,7 @@
     hero_tagline: "Lunch but better.",
     whatsapp_number: "573000000000",
     instagram_link: "https://instagram.com",
+    instagram_handle: "@inthebowl",
     crew_channel_link: "https://whatsapp.com/channel/TU-CANAL-AQUI",
     footer_hours: "Lunes a sábado\n11:00 a.m. – 3:00 p.m.",
     crew_benefit_1: "Planea tu mes completo de almuerzos a un precio muy especial. Sin pensar qué vas a comer cada día.",
@@ -443,6 +444,9 @@
     document.getElementById("footer-wa-link").href = "https://wa.me/" + WHATSAPP_NUMBER;
     document.getElementById("footer-wa-link").textContent = "WhatsApp: " + WHATSAPP_NUMBER;
     document.getElementById("footer-ig-link").href = data.instagram_link || DEFAULTS.instagram_link;
+    var igHandle = data.instagram_handle || DEFAULTS.instagram_handle;
+    document.getElementById("footer-ig-link").textContent = "Instagram: " + igHandle;
+    document.getElementById("ig-handle-heading").textContent = igHandle;
   }
 
   function renderMenu(filter){
