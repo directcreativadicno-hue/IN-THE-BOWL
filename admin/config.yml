@@ -1,0 +1,44 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/uploads"
+public_folder: "assets/uploads"
+
+collections:
+  - name: "sitio"
+    label: "Sitio In The Bowl"
+    files:
+      - file: "content/site.json"
+        label: "Contenido del sitio"
+        name: "site"
+        fields:
+          - { label: "Título hero - línea 1", name: "hero_title_line1", widget: "string" }
+          - { label: "Título hero - línea 2 (resaltada)", name: "hero_title_line2", widget: "string" }
+          - { label: "Subtítulo del hero", name: "hero_subtitle", widget: "text" }
+          - { label: "Frase corta del hero", name: "hero_tagline", widget: "string" }
+          - { label: "Número de WhatsApp (solo números, con código de país, ej: 573001234567)", name: "whatsapp_number", widget: "string" }
+          - { label: "Link de Instagram", name: "instagram_link", widget: "string" }
+          - { label: "Link del canal de WhatsApp (Crew)", name: "crew_channel_link", widget: "string" }
+          - { label: "Horario (footer)", name: "footer_hours", widget: "text" }
+          - { label: "Beneficio Crew 1 (destacado)", name: "crew_benefit_1", widget: "text" }
+          - { label: "Beneficio Crew 2", name: "crew_benefit_2", widget: "text" }
+          - { label: "Beneficio Crew 3", name: "crew_benefit_3", widget: "text" }
+          - label: "Menú"
+            name: "menu"
+            widget: "list"
+            summary: "{{name}} — {{price}}"
+            fields:
+              - { label: "ID único (sin espacios, ej: pollo-andino)", name: "id", widget: "string" }
+              - label: "Categoría"
+                name: "cat"
+                widget: "select"
+                options:
+                  - { label: "El Bowl de Hoy", value: "dia" }
+                  - { label: "Proteína + grano", value: "proteina" }
+                  - { label: "Vegetariano/vegano", value: "veg" }
+                  - { label: "Fitness", value: "fitness" }
+              - { label: "Nombre", name: "name", widget: "string" }
+              - { label: "Descripción", name: "desc", widget: "text" }
+              - { label: "Precio (solo número, sin puntos ni $)", name: "price", widget: "number", value_type: "int" }
+              - { label: "Foto (opcional)", name: "photo", widget: "image", required: false }
