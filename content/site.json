@@ -1,0 +1,79 @@
+{
+  "hero_title_line1": "Made daily.",
+  "hero_title_line2": "Delivered to you.",
+  "hero_subtitle": "Bowls hechos frescos cada día, con todo lo que necesitas para hacer del lunch tu mejor momento.",
+  "hero_tagline": "Lunch but better.",
+  "whatsapp_number": "573000000000",
+  "instagram_link": "https://instagram.com",
+  "crew_channel_link": "https://whatsapp.com/channel/TU-CANAL-AQUI",
+  "footer_hours": "Lunes a sábado\n11:00 a.m. – 3:00 p.m.",
+  "crew_benefit_1": "Planea tu mes completo de almuerzos a un precio muy especial. Sin pensar qué vas a comer cada día.",
+  "crew_benefit_2": "Te enteras primero de los bowls de la semana, drops y promos especiales antes que nadie.",
+  "crew_benefit_3": "Acceso directo para pedidos especiales y atención personalizada por WhatsApp.",
+  "menu": [
+    {
+      "id": "bowl-de-hoy-1",
+      "cat": "dia",
+      "name": "El Bowl de Hoy · Opción 1",
+      "desc": "Cambia cada día según lo más fresco del mercado. Pregunta por el de hoy.",
+      "price": 10500,
+      "photo": ""
+    },
+    {
+      "id": "bowl-de-hoy-2",
+      "cat": "dia",
+      "name": "El Bowl de Hoy · Opción 2",
+      "desc": "La segunda opción del día, para variar el almuerzo.",
+      "price": 10500,
+      "photo": ""
+    },
+    {
+      "id": "pollo-andino",
+      "cat": "proteina",
+      "name": "Pollo andino",
+      "desc": "Pollo a la plancha, arroz integral, aguacate, vegetales salteados y salsa de la casa.",
+      "price": 12000,
+      "photo": ""
+    },
+    {
+      "id": "carne-quinua",
+      "cat": "proteina",
+      "name": "Carne y quinua",
+      "desc": "Carne desmechada, quinua, maíz tierno, pico de gallo y alioli casero.",
+      "price": 13500,
+      "photo": ""
+    },
+    {
+      "id": "verde-tropical",
+      "cat": "veg",
+      "name": "Verde tropical",
+      "desc": "Garbanzos, quinua, mango, aguacate y vinagreta de maracuyá.",
+      "price": 11000,
+      "photo": ""
+    },
+    {
+      "id": "hongos-batata",
+      "cat": "veg",
+      "name": "Hongos y batata",
+      "desc": "Hongos salteados, batata asada, espinaca, semillas y tahini.",
+      "price": 11500,
+      "photo": ""
+    },
+    {
+      "id": "power-bowl",
+      "cat": "fitness",
+      "name": "Power bowl",
+      "desc": "Pechuga a la plancha, claras de huevo, brócoli y arroz integral con porciones medidas.",
+      "price": 12500,
+      "photo": ""
+    },
+    {
+      "id": "atun-fit",
+      "cat": "fitness",
+      "name": "Atún fit",
+      "desc": "Atún, garbanzos, pepino, tomate cherry y limón.",
+      "price": 12000,
+      "photo": ""
+    }
+  ]
+}
