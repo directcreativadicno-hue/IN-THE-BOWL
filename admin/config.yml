@@ -19,6 +19,7 @@ collections:
           - { label: "Frase corta del hero", name: "hero_tagline", widget: "string" }
           - { label: "Número de WhatsApp (solo números, con código de país, ej: 573001234567)", name: "whatsapp_number", widget: "string" }
           - { label: "Link de Instagram", name: "instagram_link", widget: "string" }
+          - { label: "Usuario de Instagram", name: "instagram_handle", widget: "string" }
           - { label: "Usuario de Instagram (ej: @inthebowl)", name: "instagram_handle", widget: "string" }
           - { label: "Link del canal de WhatsApp (Crew)", name: "crew_channel_link", widget: "string" }
           - { label: "Horario (footer)", name: "footer_hours", widget: "text" }
