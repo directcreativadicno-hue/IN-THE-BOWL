@@ -1,47 +1,719 @@
-COCINA
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>In The Bowl</title>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", function(user) {
+      if (!user) {
+        window.netlifyIdentity.on("login", function() {
+          document.location.href = "/admin/";
+        });
+      }
+    });
+  }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=IBM+Plex+Mono:wght@400;700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.typekit.net/ozf7ond.css">
+<style>
+  :root{
+    --maroon: #4A0E11;
+    --maroon-deep: #350a0c;
+    --red: #A32328;
+    --lime: #E4F467;
+    --cream: #F3E6CB;
+    --olive: #6B6B24;
+    --font-display: 'dunbar-tall', 'Unbounded', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --font-body: 'articulat-cf', 'Figtree', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family: var(--font-body);
+    background: var(--cream);
+    color: var(--maroon-deep);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:var(--font-display); font-weight:900; text-transform:uppercase; letter-spacing:0.5px; margin:0;}
+  a{color:inherit;}
+  img,svg{display:block; max-width:100%;}
+  button{font-family:var(--font-body); cursor:pointer; border:none;}
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+  }
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  #journey{
+    position:sticky; top:0; z-index:50;
+    background:var(--maroon);
+    padding:8px 20px;
+    display:flex; align-items:center; gap:10px;
+  }
+  #journey .lbl{font-family:var(--font-mono); font-size:10px; color:var(--cream); letter-spacing:1px; white-space:nowrap;}
+  #journey .track{
+    flex:1; height:4px; background:rgba(243,230,202,0.25); border-radius:2px; position:relative;
+  }
+  #journey .fill{
+    position:absolute; left:0; top:0; height:100%; width:0%;
+    background:var(--lime); border-radius:2px;
+    transition:width 0.1s linear;
+  }
+  #journey .walker{
+    position:absolute; top:50%; left:0%;
+    transform:translate(-50%,-50%);
+    width:18px; height:18px;
+    transition:left 0.1s linear;
+  }
+  @media (prefers-reduced-motion: reduce){
+    #journey .fill, #journey .walker{ transition:none; }
+  }
+
+  nav{
+    background:var(--maroon);
+    padding:14px 0 22px;
+  }
+  nav .bar{display:flex; align-items:center; justify-content:space-between;}
+  .logo-svg{width:150px; height:auto; display:block;}
+  .navlinks{display:flex; gap:28px; list-style:none; margin:0; padding:0;}
+  .navlinks a{
+    color:var(--cream); text-decoration:none; font-size:13px; font-family:var(--font-mono);
+    letter-spacing:1px; text-transform:uppercase;
+    border-bottom:2px solid transparent;
+    padding-bottom:4px;
+  }
+  .navlinks a:hover, .navlinks a:focus-visible{border-color:var(--lime);}
+  .burger{display:none; background:none; width:32px; height:24px; position:relative;}
+  .burger span{position:absolute; left:0; right:0; height:2px; background:var(--cream);}
+  .burger span:nth-child(1){top:0;}
+  .burger span:nth-child(2){top:11px;}
+  .burger span:nth-child(3){top:22px;}
+
+  .hero{
+    background:var(--maroon);
+    color:var(--cream);
+    padding:60px 0 90px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero .wrap{position:relative; z-index:2;}
+  .hero h1{font-size:clamp(48px,9vw,104px); line-height:0.92;}
+  .hero h1 .accent{color:var(--lime);}
+  .hero p.sub{
+    font-size:18px; max-width:480px; margin:22px 0 34px; color:rgba(243,230,202,0.85);
+  }
+  .cta-row{display:flex; gap:16px; flex-wrap:wrap;}
+  .btn{
+    font-size:14px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase;
+    padding:16px 28px; border-radius:100px; display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-primary{background:var(--lime); color:var(--maroon-deep);}
+  .btn-primary:hover{background:#eefb8c;}
+  .btn-outline{background:transparent; border:2px solid var(--cream); color:var(--cream);}
+  .btn-outline:hover{background:rgba(243,230,202,0.1);}
+
+  .sec-head{margin-bottom:36px;}
+  .sec-head .eyebrow{color:var(--red);}
+  .sec-head h2{font-size:clamp(32px,5vw,48px); color:var(--maroon-deep);}
+
+  .menu-section{padding:80px 0 60px;}
+  .tabs{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:36px;}
+  .encargo-promo{
+    background:var(--maroon-deep); color:var(--cream); border-radius:20px;
+    padding:26px 28px; margin-bottom:28px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
+  }
+  .encargo-tag{
+    display:inline-block; background:var(--lime); color:var(--maroon-deep);
+    font-family:var(--font-mono); font-size:11px; font-weight:700; letter-spacing:1px;
+    text-transform:uppercase; padding:4px 12px; border-radius:100px; margin-bottom:10px;
+  }
+  .encargo-promo h3{font-size:24px; text-transform:none; letter-spacing:0; color:var(--cream); margin-bottom:8px;}
+  .encargo-promo p{font-size:14px; color:rgba(243,230,202,0.85); margin:0; max-width:460px; line-height:1.5;}
+  .tab-featured{background:var(--red); color:var(--cream); border-color:var(--red);}
+  .tab-featured:hover{background:#8c1e22;}
+  .tab{
+    background:transparent; border:2px solid var(--maroon-deep); color:var(--maroon-deep);
+    padding:10px 20px; border-radius:100px; font-size:13px; font-weight:600;
+  }
+  .tab.active{background:var(--maroon-deep); color:var(--cream);}
+  .tab:hover:not(.active){background:rgba(74,14,17,0.08);}
+  .grid-menu{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:20px; border-radius:20px; transition:box-shadow 0.3s ease;}
+  .grid-menu.flash-highlight{ animation: gridFlash 1s ease; }
+  @keyframes gridFlash {
+    0%   { box-shadow: 0 0 0 4px var(--lime); }
+    100% { box-shadow: 0 0 0 4px rgba(228,244,103,0); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .grid-menu.flash-highlight{ animation: none; }
+  }
+  .card{
+    background:#fff; border:2px solid var(--maroon-deep); border-radius:18px; padding:22px;
+    display:flex; flex-direction:column; gap:10px; overflow:hidden;
+  }
+  .card img{width:calc(100% + 44px); margin:-22px -22px 0; height:160px; object-fit:cover;}
+  .card .tag{font-family:var(--font-mono); font-size:11px; color:var(--red); letter-spacing:1px; text-transform:uppercase;}
+  .card h3{font-size:20px; color:var(--maroon-deep); text-transform:none; letter-spacing:0;}
+  .card p{font-size:14px; color:#5a4a3a; margin:0; flex:1; line-height:1.5;}
+  .card .row{display:flex; align-items:center; justify-content:space-between; margin-top:6px;}
+  .card .price{font-family:var(--font-mono); font-weight:700; font-size:16px;}
+  .add-btn{
+    background:var(--olive); color:var(--cream); font-size:13px; font-weight:700;
+    padding:9px 16px; border-radius:100px;
+  }
+  .add-btn:hover{background:#565613;}
+
+  #cart-bar{
+    position:fixed; left:50%; bottom:20px; transform:translateX(-50%) translateY(140%);
+    background:var(--maroon-deep); color:var(--cream); border-radius:100px;
+    padding:12px 10px 12px 22px; display:flex; align-items:center; gap:16px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.25); z-index:60; transition:transform 0.25s ease;
+    max-width:92vw;
+  }
+  #cart-bar.show{transform:translateX(-50%) translateY(0);}
+  #cart-bar .info{font-size:13px; font-family:var(--font-mono); white-space:nowrap;}
+  #cart-bar .go{background:var(--lime); color:var(--maroon-deep); font-weight:700; font-size:13px; padding:11px 20px; border-radius:100px; white-space:nowrap;}
+  #cart-bar .go:hover{background:#eefb8c;}
+
+  #cart-panel{
+    position:fixed; inset:0; background:rgba(53,10,12,0.55); z-index:70;
+    display:none; align-items:flex-end; justify-content:center;
+  }
+  #cart-panel.open{display:flex;}
+  .panel-inner{
+    background:var(--cream); width:100%; max-width:480px; border-radius:24px 24px 0 0;
+    padding:26px 26px 30px; max-height:80vh; overflow-y:auto;
+  }
+  .panel-inner h3{font-size:22px; color:var(--maroon-deep); margin-bottom:16px;}
+  .cart-item{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 0; border-bottom:1px solid rgba(74,14,17,0.15);}
+  .cart-item .nm{font-size:14px; font-weight:600;}
+  .cart-item .pr{font-size:13px; color:#5a4a3a; font-family:var(--font-mono);}
+  .qty-ctrl{display:flex; align-items:center; gap:8px;}
+  .qty-ctrl button{width:26px; height:26px; border-radius:50%; background:var(--maroon-deep); color:var(--cream); font-weight:700; font-size:14px; line-height:1;}
+  .cart-total{display:flex; justify-content:space-between; font-family:var(--font-mono); font-weight:700; font-size:16px; margin:16px 0;}
+  .cart-subtotal{display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:13px; margin:4px 0; color:#5a4a3a;}
+  .discount-row{display:flex; gap:8px; margin:14px 0 4px;}
+  .discount-row input{
+    flex:1; padding:10px 14px; border-radius:100px; border:1px solid rgba(74,14,17,0.3); font-size:13px; font-family:var(--font-body);
+  }
+  .size-toggle{display:flex; gap:6px; flex-wrap:wrap;}
+  .size-btn{
+    background:transparent; border:1px solid var(--maroon-deep); color:var(--maroon-deep);
+    padding:6px 12px; border-radius:100px; font-size:11px; font-weight:600;
+  }
+  .size-btn.active{background:var(--olive); color:var(--cream); border-color:var(--olive);}
+  .close-panel{background:transparent; color:var(--maroon-deep); font-size:13px; font-family:var(--font-mono); text-decoration:underline; margin-top:6px;}
+
+  .community{background:var(--maroon-deep); color:var(--cream); padding:80px 0;}
+  .community .sec-head .eyebrow{color:var(--lime);}
+  .community .sec-head h2{color:var(--cream);}
+  .testi-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; margin-bottom:56px;}
+  .testi{
+    background:rgba(243,230,202,0.06); border:1px solid rgba(243,230,202,0.2); border-radius:16px; padding:22px;
+  }
+  .testi p{font-size:14px; line-height:1.6; color:rgba(243,230,202,0.9); margin:0 0 14px;}
+  .testi .who{font-family:var(--font-mono); font-size:12px; color:var(--lime); letter-spacing:0.5px;}
+  .comm-cols{display:grid; grid-template-columns:1.1fr 1fr; gap:48px; align-items:start;}
+  @media (max-width:800px){.comm-cols{grid-template-columns:1fr;}}
+  .join-box h3{font-size:24px; color:var(--cream); margin-bottom:12px;}
+  .join-box p{font-size:14px; color:rgba(243,230,202,0.8); margin:0 0 20px; max-width:420px;}
+  .ig-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:8px;}
+  .ig-cell{
+    aspect-ratio:1; background:var(--olive); border-radius:10px; display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-size:10px; color:var(--lime); text-align:center; padding:6px; letter-spacing:0.5px;
+  }
+
+  footer{background:var(--maroon); color:rgba(243,230,202,0.75); padding:44px 0 30px;}
+  .foot-row{display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px; margin-bottom:24px;}
+  .foot-col h4{font-family:var(--font-mono); font-size:12px; letter-spacing:1px; text-transform:uppercase; color:var(--lime); margin-bottom:10px;}
+  .foot-col p, .foot-col a{font-size:13px; line-height:1.8; text-decoration:none; display:block;}
+  .foot-col a:hover{color:var(--lime);}
+  .foot-bottom{border-top:1px solid rgba(243,230,202,0.15); padding-top:18px; font-size:12px; font-family:var(--font-mono);}
+
+  @media (max-width:760px){
+    .navlinks{
+      position:fixed; top:0; right:0; height:100vh; width:70vw; background:var(--maroon-deep);
+      flex-direction:column; padding:90px 30px; transform:translateX(100%); transition:transform 0.25s ease;
+      z-index:55;
+    }
+    .navlinks.open{transform:translateX(0);}
+    .burger{display:block; z-index:56;}
+    .foot-row{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<div id="journey" aria-hidden="true">
+  <span class="lbl">COCINA</span>
+  <div class="track">
+    <div class="fill" id="journey-fill"></div>
+    <svg class="walker" id="walker" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="11" fill="#E4F467"/>
+      <path d="M8 8h8v8H8z" fill="#4A0E11" opacity="0.85"/>
+    </svg>
+  </div>
+  <span class="lbl">TU MESA</span>
+</div>
+
+<nav>
+  <div class="wrap bar">
+    <a href="#" aria-label="In The Bowl" style="display:flex; align-items:center;">
+      <img class="logo-svg" src="assets/logo.svg" alt="In The Bowl">
+    </a>
+    <ul class="navlinks" id="navlinks">
+      <li><a href="#menu">Menú</a></li>
+      <li><a href="#comunidad">Crew</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <h1><span id="hero-line1">Made daily.</span><br><span id="hero-line2" class="accent">Delivered to you.</span></h1>
+    <p class="sub" id="hero-subtitle">Bowls hechos frescos cada día, con todo lo que necesitas para hacer del lunch tu mejor momento.<br><strong id="hero-tagline">Lunch but better.</strong></p>
+    <div class="cta-row">
+      <a href="#menu" class="btn btn-primary">Ver el menú</a>
+      <a href="#" id="hero-wa-link" target="_blank" rel="noopener" class="btn btn-outline">Pedir por WhatsApp</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="menu-section" id="menu">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Nuestros bowls</div>
+        <h2>Elige, agrega y pide</h2>
+      </div>
+
+      <div class="encargo-promo">
+        <div>
+          <span class="encargo-tag">Recomendado</span>
+          <h3>Asegura tu almuerzo de mañana</h3>
+          <p>Pide por encargo entre las 5:00 p.m. de hoy y las 8:00 a.m. de mañana y asegura tu Bowl del Día, sin afán de última hora.</p>
+        </div>
+        <button class="btn btn-primary" id="encargo-cta" style="white-space:nowrap;">Pedir por encargo →</button>
+      </div>
+
+      <div class="tabs" id="tabs">
+        <button class="tab tab-featured active" data-cat="encargo">Por Encargo</button>
+        <button class="tab" data-cat="todos">Todos</button>
+        <button class="tab" data-cat="dia">El Bowl de Hoy</button>
+        <button class="tab" data-cat="proteina">Proteína + grano</button>
+        <button class="tab" data-cat="veg">Vegetariano/vegano</button>
+        <button class="tab" data-cat="fitness">Fitness</button>
+      </div>
+
+      <div id="encargo-banner" style="display:none;">
+        <p style="margin:0 0 20px; padding:14px 18px; background:var(--lime); color:var(--maroon-deep); border-radius:14px; font-size:14px; font-weight:600;">
+          Los encargos se reciben desde las 5:00 p.m. del día anterior hasta las 8:00 a.m. del día de entrega, y aplican solo para las opciones de El Bowl de Hoy. Elige tu opción y envía el pedido por WhatsApp dentro de ese horario.
+        </p>
+      </div>
+
+      <div class="grid-menu" id="menu-grid"></div>
+    </div>
+  </section>
+
+  <section class="community" id="comunidad">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">In The Bowl Crew</div>
+        <h2>Más que un almuerzo</h2>
+      </div>
+
+      <div class="testi-grid">
+        <div class="testi" style="border-color:var(--lime);">
+          <p style="color:var(--lime); font-weight:600;" id="crew-benefit-1">Planea tu mes completo de almuerzos a un precio muy especial. Sin pensar qué vas a comer cada día.</p>
+          <div class="who">Beneficio Crew #1</div>
+        </div>
+        <div class="testi">
+          <p id="crew-benefit-2">Te enteras primero de los bowls de la semana, drops y promos especiales antes que nadie.</p>
+          <div class="who">Beneficio Crew</div>
+        </div>
+        <div class="testi">
+          <p id="crew-benefit-3">Acceso directo para pedidos especiales y atención personalizada por WhatsApp.</p>
+          <div class="who">Beneficio Crew</div>
+        </div>
+      </div>
+
+      <div class="comm-cols">
+        <div class="join-box">
+          <h3>Be part of the crew</h3>
+          <p>No te quedes por fuera del bowl.</p>
+          <p>Únete a In The Bowl Crew y entérate primero de lo que se viene: bowls de la semana, drops, promos especiales y cuándo abrimos pedidos.</p>
+          <a href="#" id="crew-channel-link" target="_blank" rel="noopener" class="btn btn-primary" style="text-decoration:none; display:inline-flex;">Sé parte aquí →</a>
+        </div>
+        <div>
+          <h3 id="ig-handle-heading" style="font-size:16px; margin-bottom:12px; text-transform:uppercase; letter-spacing:1px; font-family:var(--font-mono); color:var(--lime);">@inthebowl</h3>
+          <div class="ig-grid">
+            <div class="ig-cell">Bowl del día</div>
+            <div class="ig-cell">Detrás de cámaras</div>
+            <div class="ig-cell">Cliente feliz</div>
+            <div class="ig-cell">Ingredientes frescos</div>
+            <div class="ig-cell">Nuevo sabor</div>
+            <div class="ig-cell">Síguenos</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
 
 
-TU MESA
+<footer id="contacto">
+  <div class="wrap">
+    <div class="foot-row">
+      <div class="foot-col">
+        <h4>In The Bowl</h4>
+        <p>Bowls frescos a domicilio.<br>Pedidos por WhatsApp y encargos.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Horario</h4>
+        <p id="footer-hours">Lunes a sábado<br>11:00 a.m. – 3:00 p.m.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Contacto</h4>
+        <a href="#" id="footer-wa-link" target="_blank" rel="noopener">WhatsApp: 300 000 0000</a>
+        <a href="#" id="footer-ig-link" target="_blank" rel="noopener">Instagram: @inthebowl</a>
+      </div>
+    </div>
+    <div class="foot-bottom">In the bowl - Hasta el próximo bowl. Stay Hungry.</div>
+  </div>
+</footer>
 
-		MENÚ
-		CREW
-		CONTACTO
-MADE DAILY. DELIVERED TO YOU.
-Bowls hechos frescos cada día, con todo lo que necesitas para hacer del lunch tu mejor momento. Lunch but better.
-VER EL MENÚ PEDIR POR WHATSAPP
-NUESTROS BOWLS
-ELIGE, AGREGA Y PIDE
-RECOMENDADO
-Asegura tu almuerzo de mañana
-Pide por encargo entre las 5:00 p.m. de hoy y las 8:00 a.m. de mañana y asegura tu Bowl del Día, sin afán de última hora.
-PEDIR POR ENCARGO →
-Por Encargo
-Todos
-El Bowl de Hoy
-Proteína + grano
-Vegetariano/vegano
-Fitness
-IN THE BOWL CREW
-MÁS QUE UN ALMUERZO
-Planea tu mes completo de almuerzos a un precio muy especial. Sin pensar qué vas a comer cada día.
-Beneficio Crew #1
-Te enteras primero de los bowls de la semana, drops y promos especiales antes que nadie.
-Beneficio Crew
-Acceso directo para pedidos especiales y atención personalizada por WhatsApp.
-Beneficio Crew
-BE PART OF THE CREW
-No te quedes por fuera del bowl.
-Únete a In The Bowl Crew y entérate primero de lo que se viene: bowls de la semana, drops, promos especiales y cuándo abrimos pedidos.
-SÉ PARTE AQUÍ →
-@INTHEBOWL
-Bowl del día Detrás de cámaras Cliente feliz Ingredientes frescos Nuevo sabor Síguenos
-IN THE BOWL
-Bowls frescos a domicilio. Pedidos por WhatsApp y encargos.
-HORARIO
-Lunes a sábado 11:00 a.m. – 3:00 p.m.
-CONTACTO
-WhatsApp: 300 000 0000
-Instagram: @inthebowl
-In the bowl - Hasta el próximo bowl. Stay Hungry.
-0 bowls · $0
-Ver pedido
+<div id="cart-bar">
+  <span class="info" id="cart-info">0 bowls · $0</span>
+  <button class="go" id="cart-open">Ver pedido</button>
+</div>
+
+<div id="cart-panel">
+  <div class="panel-inner">
+    <h3>Tu pedido</h3>
+    <div id="cart-items"></div>
+    <div class="discount-row">
+      <input type="text" id="discount-input" placeholder="¿Tienes un código?">
+      <button class="add-btn" id="discount-apply" type="button">Aplicar</button>
+    </div>
+    <div id="discount-msg" style="font-size:12px; margin-bottom:10px;"></div>
+    <div class="cart-subtotal"><span>Subtotal</span><span id="cart-subtotal">$0</span></div>
+    <div class="cart-subtotal" id="cart-discount-row" style="display:none; color:#1a7d3a;"><span>Descuento</span><span id="cart-discount-amount">-$0</span></div>
+    <div class="cart-total"><span>Total</span><span id="cart-total">$0</span></div>
+    <a href="#" id="wa-order" target="_blank" rel="noopener" class="btn btn-primary" style="width:100%; justify-content:center; text-decoration:none;">Enviar pedido por WhatsApp</a>
+    <div style="text-align:center;"><button class="close-panel" id="cart-close">Seguir viendo el menú</button></div>
+  </div>
+</div>
+
+<script>
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var DEFAULTS = {
+    hero_title_line1: "Made daily.",
+    hero_title_line2: "Delivered to you.",
+    hero_subtitle: "Bowls hechos frescos cada día, con todo lo que necesitas para hacer del lunch tu mejor momento.",
+    hero_tagline: "Lunch but better.",
+    whatsapp_number: "573000000000",
+    instagram_link: "https://instagram.com",
+    instagram_handle: "@inthebowl",
+    solo_encargo_mode: true,
+    large_size_name: "Bowl Full",
+    large_size_extra_cost: 4000,
+    crew_channel_link: "https://whatsapp.com/channel/TU-CANAL-AQUI",
+    footer_hours: "Lunes a sábado
+11:00 a.m. – 3:00 p.m.",
+    crew_benefit_1: "Planea tu mes completo de almuerzos a un precio muy especial. Sin pensar qué vas a comer cada día.",
+    crew_benefit_2: "Te enteras primero de los bowls de la semana, drops y promos especiales antes que nadie.",
+    crew_benefit_3: "Acceso directo para pedidos especiales y atención personalizada por WhatsApp.",
+    menu: []
+  };
+
+  var WHATSAPP_NUMBER = DEFAULTS.whatsapp_number;
+  var MENU = [];
+  var cart = {};
+  var currentTab = "todos";
+  var selectedSize = {};
+  var LARGE_NAME = DEFAULTS.large_size_name;
+  var LARGE_EXTRA = DEFAULTS.large_size_extra_cost;
+  var appliedDiscount = null;
+
+  function fmt(n){ return "$" + n.toLocaleString("es-CO"); }
+
+  function applyContent(data){
+    WHATSAPP_NUMBER = data.whatsapp_number || DEFAULTS.whatsapp_number;
+    MENU = (data.menu && data.menu.length) ? data.menu : DEFAULTS.menu;
+    LARGE_NAME = data.large_size_name || DEFAULTS.large_size_name;
+    LARGE_EXTRA = (typeof data.large_size_extra_cost === "number") ? data.large_size_extra_cost : DEFAULTS.large_size_extra_cost;
+
+    var soloEncargo = (typeof data.solo_encargo_mode === "boolean") ? data.solo_encargo_mode : DEFAULTS.solo_encargo_mode;
+    document.getElementById("tabs").style.display = soloEncargo ? "none" : "flex";
+
+    document.getElementById("hero-line1").textContent = data.hero_title_line1 || DEFAULTS.hero_title_line1;
+    document.getElementById("hero-line2").textContent = data.hero_title_line2 || DEFAULTS.hero_title_line2;
+    document.getElementById("hero-subtitle").childNodes[0].textContent = data.hero_subtitle || DEFAULTS.hero_subtitle;
+    document.getElementById("hero-tagline").textContent = data.hero_tagline || DEFAULTS.hero_tagline;
+    document.getElementById("hero-wa-link").href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent("Hola! quiero hacer un pedido de In The Bowl");
+
+    document.getElementById("crew-benefit-1").textContent = data.crew_benefit_1 || DEFAULTS.crew_benefit_1;
+    document.getElementById("crew-benefit-2").textContent = data.crew_benefit_2 || DEFAULTS.crew_benefit_2;
+    document.getElementById("crew-benefit-3").textContent = data.crew_benefit_3 || DEFAULTS.crew_benefit_3;
+    document.getElementById("crew-channel-link").href = data.crew_channel_link || DEFAULTS.crew_channel_link;
+
+    var hours = data.footer_hours || DEFAULTS.footer_hours;
+    document.getElementById("footer-hours").innerHTML = hours.split("
+").join("<br>");
+    document.getElementById("footer-wa-link").href = "https://wa.me/" + WHATSAPP_NUMBER;
+    document.getElementById("footer-wa-link").textContent = "WhatsApp: " + WHATSAPP_NUMBER;
+    document.getElementById("footer-ig-link").href = data.instagram_link || DEFAULTS.instagram_link;
+    var igHandle = data.instagram_handle || DEFAULTS.instagram_handle;
+    document.getElementById("footer-ig-link").textContent = "Instagram: " + igHandle;
+    document.getElementById("ig-handle-heading").textContent = igHandle;
+  }
+
+  function priceFor(item, size){
+    return item.price + (size === "xl" ? LARGE_EXTRA : 0);
+  }
+
+  function renderMenu(filter){
+    currentTab = filter;
+    document.getElementById("encargo-banner").style.display = (filter === "encargo") ? "block" : "none";
+    var effectiveFilter = (filter === "encargo") ? "dia" : filter;
+    var showAll = (effectiveFilter === "todos");
+    var grid = document.getElementById("menu-grid");
+    grid.innerHTML = "";
+    MENU.filter(function(item){ return showAll || item.cat === effectiveFilter; })
+      .forEach(function(item){
+        var catLabel = {proteina:"Proteína + grano", veg:"Vegetariano/vegano", fitness:"Fitness", dia:"El Bowl de Hoy"}[item.cat];
+        selectedSize[item.id] = selectedSize[item.id] || "reg";
+        var card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML =
+          (item.photo ? '<img src="' + item.photo + '" alt="' + item.name + '">' : '') +
+          '<div class="tag">' + catLabel + '</div>' +
+          '<h3>' + item.name + '</h3>' +
+          '<p>' + item.desc + '</p>' +
+          '<div class="size-toggle" data-id="' + item.id + '">' +
+            '<button class="size-btn active" data-size="reg" data-id="' + item.id + '">Normal</button>' +
+            '<button class="size-btn" data-size="xl" data-id="' + item.id + '">' + LARGE_NAME + ' (+' + fmt(LARGE_EXTRA) + ')</button>' +
+          '</div>' +
+          '<div class="row"><span class="price" id="price-' + item.id + '">' + fmt(priceFor(item, "reg")) + '</span>' +
+          '<button class="add-btn" data-id="' + item.id + '">+ Agregar</button></div>';
+        grid.appendChild(card);
+      });
+  }
+
+  document.getElementById("menu-grid").addEventListener("click", function(e){
+    var sizeBtn = e.target.closest(".size-btn");
+    if(sizeBtn){
+      var id = sizeBtn.dataset.id;
+      var size = sizeBtn.dataset.size;
+      selectedSize[id] = size;
+      var toggle = sizeBtn.closest(".size-toggle");
+      toggle.querySelectorAll(".size-btn").forEach(function(b){ b.classList.toggle("active", b === sizeBtn); });
+      var item = MENU.find(function(m){ return m.id === id; });
+      document.getElementById("price-" + id).textContent = fmt(priceFor(item, size));
+      return;
+    }
+  });
+
+  function activateTab(cat){
+    document.querySelectorAll(".tab").forEach(function(t){
+      t.classList.toggle("active", t.dataset.cat === cat);
+    });
+    renderMenu(cat);
+  }
+
+  document.getElementById("tabs").addEventListener("click", function(e){
+    var btn = e.target.closest(".tab");
+    if(!btn) return;
+    activateTab(btn.dataset.cat);
+  });
+
+  document.getElementById("encargo-cta").addEventListener("click", function(){
+    activateTab("encargo");
+    var grid = document.getElementById("menu-grid");
+    grid.scrollIntoView({behavior: reduceMotion ? "auto" : "smooth", block: "center"});
+    grid.classList.remove("flash-highlight");
+    void grid.offsetWidth;
+    grid.classList.add("flash-highlight");
+  });
+
+  function cartKey(id, size){ return id + "__" + size; }
+  function parseCartKey(key){
+    var i = key.lastIndexOf("__");
+    return { id: key.slice(0, i), size: key.slice(i + 2) };
+  }
+
+  document.getElementById("menu-grid").addEventListener("click", function(e){
+    var btn = e.target.closest(".add-btn");
+    if(!btn) return;
+    var id = btn.dataset.id;
+    var size = selectedSize[id] || "reg";
+    var key = cartKey(id, size);
+    cart[key] = (cart[key] || 0) + 1;
+    updateCartUI();
+  });
+
+  function cartCount(){
+    return Object.values(cart).reduce(function(a,b){ return a+b; }, 0);
+  }
+  function cartSubtotal(){
+    return Object.keys(cart).reduce(function(sum,key){
+      var parsed = parseCartKey(key);
+      var item = MENU.find(function(m){ return m.id === parsed.id; });
+      return sum + priceFor(item, parsed.size) * cart[key];
+    }, 0);
+  }
+  function discountAmount(subtotal){
+    if(!appliedDiscount) return 0;
+    if(appliedDiscount.type === "percent") return Math.round(subtotal * appliedDiscount.value / 100);
+    if(appliedDiscount.type === "fixed") return Math.min(appliedDiscount.value, subtotal);
+    return 0;
+  }
+  function cartTotal(){
+    var subtotal = cartSubtotal();
+    return Math.max(0, subtotal - discountAmount(subtotal));
+  }
+
+  function updateCartUI(){
+    var count = cartCount();
+    var bar = document.getElementById("cart-bar");
+    document.getElementById("cart-info").textContent = count + (count === 1 ? " bowl · " : " bowls · ") + fmt(cartTotal());
+    if(count > 0){ bar.classList.add("show"); } else { bar.classList.remove("show"); }
+
+    var itemsEl = document.getElementById("cart-items");
+    itemsEl.innerHTML = "";
+    Object.keys(cart).forEach(function(key){
+      var parsed = parseCartKey(key);
+      var item = MENU.find(function(m){ return m.id === parsed.id; });
+      var qty = cart[key];
+      var sizeLabel = parsed.size === "xl" ? " (" + LARGE_NAME + ")" : "";
+      var row = document.createElement("div");
+      row.className = "cart-item";
+      row.innerHTML =
+        '<div><div class="nm">' + item.name + sizeLabel + '</div><div class="pr">' + fmt(priceFor(item, parsed.size)) + '</div></div>' +
+        '<div class="qty-ctrl">' +
+          '<button data-act="dec" data-key="' + key + '" aria-label="Quitar uno">−</button>' +
+          '<span>' + qty + '</span>' +
+          '<button data-act="inc" data-key="' + key + '" aria-label="Agregar uno">+</button>' +
+        '</div>';
+      itemsEl.appendChild(row);
+    });
+
+    var subtotal = cartSubtotal();
+    var discount = discountAmount(subtotal);
+    document.getElementById("cart-subtotal").textContent = fmt(subtotal);
+    var discountRow = document.getElementById("cart-discount-row");
+    if(discount > 0){
+      discountRow.style.display = "flex";
+      document.getElementById("cart-discount-amount").textContent = "-" + fmt(discount);
+    } else {
+      discountRow.style.display = "none";
+    }
+    document.getElementById("cart-total").textContent = fmt(cartTotal());
+
+    var msgLines = Object.keys(cart).map(function(key){
+      var parsed = parseCartKey(key);
+      var item = MENU.find(function(m){ return m.id === parsed.id; });
+      var sizeLabel = parsed.size === "xl" ? " (" + LARGE_NAME + ")" : "";
+      return cart[key] + "x " + item.name + sizeLabel + " (" + fmt(priceFor(item, parsed.size)) + ")";
+    });
+    var prefix = (currentTab === "encargo") ? "Hola! Quiero hacer un ENCARGO para mañana:%0A" : "Hola! Quiero pedir:%0A";
+    var discountLine = (discount > 0) ? ("%0ACódigo " + appliedDiscount.code + ": -" + fmt(discount)) : "";
+    var msg = prefix + msgLines.join("%0A") + discountLine + "%0ATotal: " + fmt(cartTotal());
+    document.getElementById("wa-order").href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + msg;
+  }
+
+  document.getElementById("cart-items").addEventListener("click", function(e){
+    var btn = e.target.closest("button[data-act]");
+    if(!btn) return;
+    var key = btn.dataset.key;
+    if(btn.dataset.act === "inc"){ cart[key] += 1; }
+    else{
+      cart[key] -= 1;
+      if(cart[key] <= 0) delete cart[key];
+    }
+    updateCartUI();
+  });
+
+  document.getElementById("discount-apply").addEventListener("click", function(){
+    var input = document.getElementById("discount-input");
+    var code = input.value.trim();
+    var msgEl = document.getElementById("discount-msg");
+    if(!code){ return; }
+    msgEl.style.color = "";
+    msgEl.textContent = "Verificando...";
+    fetch("/.netlify/functions/validate-code?code=" + encodeURIComponent(code))
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if(data && data.valid){
+          appliedDiscount = { code: code.toUpperCase(), type: data.type, value: data.value, label: data.label || "" };
+          msgEl.style.color = "#1a7d3a";
+          msgEl.textContent = "Código aplicado" + (data.label ? ": " + data.label : "") + " ✓";
+        } else {
+          appliedDiscount = null;
+          msgEl.style.color = "#a32328";
+          msgEl.textContent = "Ese código no es válido.";
+        }
+        updateCartUI();
+      })
+      .catch(function(){
+        msgEl.style.color = "#a32328";
+        msgEl.textContent = "No pudimos verificar el código, intenta de nuevo.";
+      });
+  });
+
+  document.getElementById("cart-open").addEventListener("click", function(){
+    document.getElementById("cart-panel").classList.add("open");
+  });
+  document.getElementById("cart-close").addEventListener("click", function(){
+    document.getElementById("cart-panel").classList.remove("open");
+  });
+  document.getElementById("cart-panel").addEventListener("click", function(e){
+    if(e.target.id === "cart-panel") e.target.classList.remove("open");
+  });
+
+  document.getElementById("burger").addEventListener("click", function(){
+    var nav = document.getElementById("navlinks");
+    var open = nav.classList.toggle("open");
+    this.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  document.getElementById("navlinks").addEventListener("click", function(e){
+    if(e.target.tagName === "A"){
+      document.getElementById("navlinks").classList.remove("open");
+    }
+  });
+
+  function onScroll(){
+    var h = document.documentElement;
+    var scrollable = h.scrollHeight - h.clientHeight;
+    var pct = scrollable > 0 ? (h.scrollTop / scrollable) * 100 : 0;
+    document.getElementById("journey-fill").style.width = pct + "%";
+    document.getElementById("walker").style.left = pct + "%";
+  }
+  window.addEventListener("scroll", onScroll, {passive:true});
+
+  fetch("content/site.json")
+    .then(function(r){ return r.json(); })
+    .catch(function(){ return DEFAULTS; })
+    .then(function(data){
+      applyContent(data);
+      renderMenu("encargo");
+      updateCartUI();
+    });
+</script>
+
+</body>
+</html>
