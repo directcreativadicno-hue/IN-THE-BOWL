@@ -432,8 +432,7 @@
     large_size_name: "Bowl Full",
     large_size_extra_cost: 4000,
     crew_channel_link: "https://whatsapp.com/channel/TU-CANAL-AQUI",
-    footer_hours: "Lunes a sábado
-11:00 a.m. – 3:00 p.m.",
+    footer_hours: "Lunes a sábado\n11:00 a.m. – 3:00 p.m.",
     crew_benefit_1: "Planea tu mes completo de almuerzos a un precio muy especial. Sin pensar qué vas a comer cada día.",
     crew_benefit_2: "Te enteras primero de los bowls de la semana, drops y promos especiales antes que nadie.",
     crew_benefit_3: "Acceso directo para pedidos especiales y atención personalizada por WhatsApp.",
@@ -472,8 +471,7 @@
     document.getElementById("crew-channel-link").href = data.crew_channel_link || DEFAULTS.crew_channel_link;
 
     var hours = data.footer_hours || DEFAULTS.footer_hours;
-    document.getElementById("footer-hours").innerHTML = hours.split("
-").join("<br>");
+    document.getElementById("footer-hours").innerHTML = hours.split("\n").join("<br>");
     document.getElementById("footer-wa-link").href = "https://wa.me/" + WHATSAPP_NUMBER;
     document.getElementById("footer-wa-link").textContent = "WhatsApp: " + WHATSAPP_NUMBER;
     document.getElementById("footer-ig-link").href = data.instagram_link || DEFAULTS.instagram_link;
