@@ -598,11 +598,21 @@
     }
     return discount;
   }
+  function subtotalForSize(size){
+    return Object.keys(cart).reduce(function(sum, key){
+      var parsed = parseCartKey(key);
+      if(parsed.size !== size) return sum;
+      var item = MENU.find(function(m){ return m.id === parsed.id; });
+      if(!item) return sum;
+      return sum + priceFor(item, parsed.size) * cart[key];
+    }, 0);
+  }
   function discountAmount(subtotal){
     if(!appliedDiscount) return 0;
     if(appliedDiscount.type === "percent") return Math.round(subtotal * appliedDiscount.value / 100);
     if(appliedDiscount.type === "fixed") return Math.min(appliedDiscount.value, subtotal);
     if(appliedDiscount.type === "combo") return comboDiscountAmount(appliedDiscount.comboQty, appliedDiscount.comboPrice);
+    if(appliedDiscount.type === "percent_size") return Math.round(subtotalForSize(appliedDiscount.size) * appliedDiscount.value / 100);
     return 0;
   }
   function cartTotal(){
@@ -647,21 +657,24 @@
     }
     document.getElementById("cart-total").textContent = fmt(cartTotal());
 
-    if(appliedDiscount && appliedDiscount.type === "combo"){
+    if(appliedDiscount && (appliedDiscount.type === "combo" || appliedDiscount.type === "percent_size")){
       var msgEl = document.getElementById("discount-msg");
       if(discount > 0){
         msgEl.style.color = "#1a7d3a";
         msgEl.textContent = "Código aplicado" + (appliedDiscount.label ? ": " + appliedDiscount.label : "") + " ✓";
-      } else {
+      } else if(appliedDiscount.type === "combo"){
         var have = regularUnitPrices().length;
         var need = appliedDiscount.comboQty - have;
         msgEl.style.color = "#a32328";
         msgEl.textContent = need > 0
           ? "Agrega " + need + " bowl" + (need === 1 ? "" : "s") + " " + SMALL_NAME + " más para usar este código."
           : "Ese código no aplica a tu pedido actual.";
+      } else if(appliedDiscount.type === "percent_size"){
+        var sizeName = appliedDiscount.size === "xl" ? LARGE_NAME : SMALL_NAME;
+        msgEl.style.color = "#a32328";
+        msgEl.textContent = "Agrega un bowl " + sizeName + " para usar este código.";
       }
     }
-
 
     var msgLines = Object.keys(cart).map(function(key){
       var parsed = parseCartKey(key);
@@ -698,7 +711,7 @@
       .then(function(r){ return r.json(); })
       .then(function(data){
         if(data && data.valid){
-          appliedDiscount = { code: code.toUpperCase(), type: data.type, value: data.value, label: data.label || "", comboQty: data.comboQty, comboPrice: data.comboPrice };
+          appliedDiscount = { code: code.toUpperCase(), type: data.type, value: data.value, label: data.label || "", comboQty: data.comboQty, comboPrice: data.comboPrice, size: data.size };
           msgEl.style.color = "#1a7d3a";
           msgEl.textContent = "Código aplicado" + (data.label ? ": " + data.label : "") + " ✓";
         } else {
