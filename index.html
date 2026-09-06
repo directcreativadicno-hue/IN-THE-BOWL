@@ -430,6 +430,7 @@
     instagram_handle: "@inthebowl",
     solo_encargo_mode: true,
     large_size_name: "Bowl Full",
+    small_size_name: "Normal",
     large_size_extra_cost: 4000,
     crew_channel_link: "https://whatsapp.com/channel/TU-CANAL-AQUI",
     footer_hours: "Lunes a sábado\n11:00 a.m. – 3:00 p.m.",
@@ -445,6 +446,7 @@
   var currentTab = "todos";
   var selectedSize = {};
   var LARGE_NAME = DEFAULTS.large_size_name;
+  var SMALL_NAME = DEFAULTS.small_size_name;
   var LARGE_EXTRA = DEFAULTS.large_size_extra_cost;
   var appliedDiscount = null;
 
@@ -454,6 +456,7 @@
     WHATSAPP_NUMBER = data.whatsapp_number || DEFAULTS.whatsapp_number;
     MENU = (data.menu && data.menu.length) ? data.menu : DEFAULTS.menu;
     LARGE_NAME = data.large_size_name || DEFAULTS.large_size_name;
+    SMALL_NAME = data.small_size_name || DEFAULTS.small_size_name;
     LARGE_EXTRA = (typeof data.large_size_extra_cost === "number") ? data.large_size_extra_cost : DEFAULTS.large_size_extra_cost;
 
     var soloEncargo = (typeof data.solo_encargo_mode === "boolean") ? data.solo_encargo_mode : DEFAULTS.solo_encargo_mode;
@@ -503,7 +506,7 @@
           '<h3>' + item.name + '</h3>' +
           '<p>' + item.desc + '</p>' +
           '<div class="size-toggle" data-id="' + item.id + '">' +
-            '<button class="size-btn active" data-size="reg" data-id="' + item.id + '">Normal — ' + fmt(priceFor(item, "reg")) + '</button>' +
+            '<button class="size-btn active" data-size="reg" data-id="' + item.id + '">' + SMALL_NAME + ' — ' + fmt(priceFor(item, "reg")) + '</button>' +
             '<button class="size-btn" data-size="xl" data-id="' + item.id + '">' + LARGE_NAME + ' — ' + fmt(priceFor(item, "xl")) + '</button>' +
           '</div>' +
           '<div class="row"><span class="price" id="price-' + item.id + '">' + fmt(priceFor(item, "reg")) + '</span>' +
