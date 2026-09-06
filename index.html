@@ -657,7 +657,7 @@
         var need = appliedDiscount.comboQty - have;
         msgEl.style.color = "#a32328";
         msgEl.textContent = need > 0
-          ? "Agrega " + need + " bowl" + (need === 1 ? "" : "s") + " tamaño Normal más para usar este código."
+          ? "Agrega " + need + " bowl" + (need === 1 ? "" : "s") + " " + SMALL_NAME + " más para usar este código."
           : "Ese código no aplica a tu pedido actual.";
       }
     }
