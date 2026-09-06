@@ -34,7 +34,8 @@ exports.handler = async function (event) {
       value: match.value,
       label: match.label || "",
       comboQty: match.comboQty,
-      comboPrice: match.comboPrice
+      comboPrice: match.comboPrice,
+      size: match.size
     })
   };
 };
