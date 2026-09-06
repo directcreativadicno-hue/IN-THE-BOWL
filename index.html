@@ -577,10 +577,32 @@
       return sum + priceFor(item, parsed.size) * cart[key];
     }, 0);
   }
+  function regularUnitPrices(){
+    var units = [];
+    Object.keys(cart).forEach(function(key){
+      var parsed = parseCartKey(key);
+      if(parsed.size !== "reg") return;
+      var item = MENU.find(function(m){ return m.id === parsed.id; });
+      if(!item) return;
+      for(var i = 0; i < cart[key]; i++){ units.push(item.price); }
+    });
+    return units;
+  }
+  function comboDiscountAmount(comboQty, comboPrice){
+    var units = regularUnitPrices().sort(function(a,b){ return b - a; });
+    var discount = 0;
+    while(units.length >= comboQty){
+      var group = units.splice(0, comboQty);
+      var sum = group.reduce(function(a,b){ return a + b; }, 0);
+      if(sum > comboPrice) discount += (sum - comboPrice);
+    }
+    return discount;
+  }
   function discountAmount(subtotal){
     if(!appliedDiscount) return 0;
     if(appliedDiscount.type === "percent") return Math.round(subtotal * appliedDiscount.value / 100);
     if(appliedDiscount.type === "fixed") return Math.min(appliedDiscount.value, subtotal);
+    if(appliedDiscount.type === "combo") return comboDiscountAmount(appliedDiscount.comboQty, appliedDiscount.comboPrice);
     return 0;
   }
   function cartTotal(){
@@ -625,6 +647,22 @@
     }
     document.getElementById("cart-total").textContent = fmt(cartTotal());
 
+    if(appliedDiscount && appliedDiscount.type === "combo"){
+      var msgEl = document.getElementById("discount-msg");
+      if(discount > 0){
+        msgEl.style.color = "#1a7d3a";
+        msgEl.textContent = "Código aplicado" + (appliedDiscount.label ? ": " + appliedDiscount.label : "") + " ✓";
+      } else {
+        var have = regularUnitPrices().length;
+        var need = appliedDiscount.comboQty - have;
+        msgEl.style.color = "#a32328";
+        msgEl.textContent = need > 0
+          ? "Agrega " + need + " bowl" + (need === 1 ? "" : "s") + " tamaño Normal más para usar este código."
+          : "Ese código no aplica a tu pedido actual.";
+      }
+    }
+
+
     var msgLines = Object.keys(cart).map(function(key){
       var parsed = parseCartKey(key);
       var item = MENU.find(function(m){ return m.id === parsed.id; });
@@ -660,7 +698,7 @@
       .then(function(r){ return r.json(); })
       .then(function(data){
         if(data && data.valid){
-          appliedDiscount = { code: code.toUpperCase(), type: data.type, value: data.value, label: data.label || "" };
+          appliedDiscount = { code: code.toUpperCase(), type: data.type, value: data.value, label: data.label || "", comboQty: data.comboQty, comboPrice: data.comboPrice };
           msgEl.style.color = "#1a7d3a";
           msgEl.textContent = "Código aplicado" + (data.label ? ": " + data.label : "") + " ✓";
         } else {
