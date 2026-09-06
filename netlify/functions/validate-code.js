@@ -32,7 +32,9 @@ exports.handler = async function (event) {
       valid: true,
       type: match.type,
       value: match.value,
-      label: match.label || ""
+      label: match.label || "",
+      comboQty: match.comboQty,
+      comboPrice: match.comboPrice
     })
   };
 };
