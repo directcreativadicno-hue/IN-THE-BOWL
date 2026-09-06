@@ -503,8 +503,8 @@
           '<h3>' + item.name + '</h3>' +
           '<p>' + item.desc + '</p>' +
           '<div class="size-toggle" data-id="' + item.id + '">' +
-            '<button class="size-btn active" data-size="reg" data-id="' + item.id + '">Normal</button>' +
-            '<button class="size-btn" data-size="xl" data-id="' + item.id + '">' + LARGE_NAME + ' (+' + fmt(LARGE_EXTRA) + ')</button>' +
+            '<button class="size-btn active" data-size="reg" data-id="' + item.id + '">Normal — ' + fmt(priceFor(item, "reg")) + '</button>' +
+            '<button class="size-btn" data-size="xl" data-id="' + item.id + '">' + LARGE_NAME + ' — ' + fmt(priceFor(item, "xl")) + '</button>' +
           '</div>' +
           '<div class="row"><span class="price" id="price-' + item.id + '">' + fmt(priceFor(item, "reg")) + '</span>' +
           '<button class="add-btn" data-id="' + item.id + '">+ Agregar</button></div>';
