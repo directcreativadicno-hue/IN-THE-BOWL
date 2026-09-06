@@ -25,6 +25,9 @@ collections:
           - { label: "Beneficio Crew 1 (destacado)", name: "crew_benefit_1", widget: "text" }
           - { label: "Beneficio Crew 2", name: "crew_benefit_2", widget: "text" }
           - { label: "Beneficio Crew 3", name: "crew_benefit_3", widget: "text" }
+          - { label: "Mostrar solo la opción de Por Encargo (oculta el resto de pestañas del menú)", name: "solo_encargo_mode", widget: "boolean", default: true }
+          - { label: "Nombre del tamaño grande", name: "large_size_name", widget: "string" }
+          - { label: "Costo extra del tamaño grande (solo número)", name: "large_size_extra_cost", widget: "number", value_type: "int" }
           - label: "Menú"
             name: "menu"
             widget: "list"
