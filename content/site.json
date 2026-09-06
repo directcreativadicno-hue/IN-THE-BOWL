@@ -19,7 +19,7 @@
     {
       "id": "bowl-de-hoy-1",
       "cat": "dia",
-      "name": "El Bowl de Hoy · Opción 1",
+      "name": "El Bowl de Hoy · Paisa Bowl",
       "desc": "Cambia cada día según lo más fresco del mercado. Pregunta por el de hoy.",
       "price": 15900,
       "photo": ""
@@ -27,7 +27,7 @@
     {
       "id": "bowl-de-hoy-2",
       "cat": "dia",
-      "name": "El Bowl de Hoy · Opción 2",
+      "name": "El Bowl de Hoy · Teriyaki Bowl",
       "desc": "La segunda opción del día, para variar el almuerzo.",
       "price": 15900,
       "photo": ""
